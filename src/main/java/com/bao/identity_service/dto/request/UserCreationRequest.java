@@ -2,7 +2,7 @@ package com.bao.identity_service.dto.request;
 
 import java.time.LocalDate;
 
-public class UserCreateionRequest {
+public class UserCreationRequest {
     private String username;
     private String password;
     private String firstName;
