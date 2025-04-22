@@ -1,8 +1,9 @@
 package com.bao.identity_service.controller;
 
 import com.bao.identity_service.dto.request.UserUpdateRequest;
+import com.bao.identity_service.repository.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.bao.identity_service.dto.request.UserCreationRequest;
@@ -16,9 +17,11 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping()
-    User createUser(@RequestBody UserCreationRequest request){
+    User createUser(@RequestBody @Valid UserCreationRequest request){
         return userService.createUser(request);
     }
 
@@ -35,5 +38,11 @@ public class UserController {
     @PutMapping("/{userId}")
     User updateUser(@PathVariable("userId") String userId, @RequestBody UserUpdateRequest request) {
         return userService.updateUser(userId, request);
+    }
+
+    @DeleteMapping("/{userId}")
+    String deleteUser(@PathVariable("userId") String userId){
+        userService.deleteUser(userId);
+        return "User have been deleted";
     }
 }
