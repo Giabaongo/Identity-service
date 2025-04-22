@@ -1,6 +1,7 @@
 package com.bao.identity_service.controller;
 
 import com.bao.identity_service.dto.request.UserUpdateRequest;
+import com.bao.identity_service.dto.response.ApiResponse;
 import com.bao.identity_service.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,11 @@ public class UserController {
     private UserRepository userRepository;
 
     @PostMapping()
-    User createUser(@RequestBody @Valid UserCreationRequest request){
-        return userService.createUser(request);
+    ApiResponse<User> createUser(@RequestBody @Valid UserCreationRequest request){
+        ApiResponse<User> apiResponse = new ApiResponse<>();
+
+        apiResponse.setResult(userService.createUser(request));
+        return apiResponse;
     }
 
     @GetMapping()

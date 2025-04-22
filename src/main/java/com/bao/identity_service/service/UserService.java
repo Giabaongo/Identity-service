@@ -1,6 +1,8 @@
 package com.bao.identity_service.service;
 
 import com.bao.identity_service.dto.request.UserUpdateRequest;
+import com.bao.identity_service.exception.AppException;
+import com.bao.identity_service.exception.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,7 @@ public class UserService {
         User user = new User();
 
         if(userRepository.existsByUsername(request.getUsername())){
-            throw new RuntimeException("Username already exists");
+            throw new AppException(ErrorCode.USER_EXISTED);
         }
 
         user.setUsername(request.getUsername());
